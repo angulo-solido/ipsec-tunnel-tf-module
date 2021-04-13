@@ -4,10 +4,5 @@ resource "aws_customer_gateway" "the_customer_gateway" {
   ip_address = var.remote_ip
   type       = "ipsec.1"
 
-  tags = merge(
-    var.tags,
-    {
-      "Name" = "VPN/IPSec Customer Gateway"
-    },
-  )
+  tags = var.tags
 }

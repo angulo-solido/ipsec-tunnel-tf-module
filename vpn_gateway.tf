@@ -2,12 +2,7 @@
 resource "aws_vpn_gateway" "the_vpn_gateway" {
   availability_zone = "${var.aws_region}${var.aws_availability_zone}"
 
-  tags = merge(
-    var.tags,
-    {
-      "Name" = "VPN/IPSec Gateway"
-    },
-  )
+  tags = var.tags
 }
 
 # Attach the VPN gateway to the VPC
