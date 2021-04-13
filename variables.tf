@@ -24,11 +24,6 @@ variable "remote_ip" {
   description = "The public IP of the remote (non-AWS) end of the tunnel (e.g. 1.2.3.4)"
 }
 
-variable "route_table_ids" {
-  type        = list(string)
-  description = "A list of ID corresponding to route tables that should route traffic through the VPN/IPSec gateway (e.g. [rtb-0123456789abcdef0, rtb-0123456789abcdef1])"
-}
-
 variable "vpc_id" {
   type        = string
   description = "The ID of the AWS VPC where the Virtual private Gateway is to be deployed (e.g. vpc-0123456789abcdef0)"
@@ -41,10 +36,22 @@ variable "vpc_id" {
 # These parameters have reasonable defaults.
 # ------------------------------------------------------------------------------
 
+variable "create_virtual_private_gw" {
+  type        = bool
+  description = "A boolean value indicating whether to create or not the Virtual Private Gateway"
+  default     = true
+}
+
 variable "remote_bgp_asn" {
   type        = number
   description = "The BGP ASN of the remote (non-AWS) end of the tunnel (e.g. 11111).  This value is not used if static_routes_only is true."
   default     = 65000
+}
+
+variable "route_table_ids" {
+  type        = list(string)
+  description = "A list of ID corresponding to route tables that should route traffic through the VPN/IPSec gateway (e.g. [rtb-0123456789abcdef0, rtb-0123456789abcdef1])"
+  default     = []
 }
 
 variable "static_routes_only" {
@@ -57,4 +64,10 @@ variable "tags" {
   type        = map(string)
   description = "Tags to apply to all AWS resources created"
   default     = {}
+}
+
+variable "vpn_gateway_id" {
+  type        = string
+  description = "The id of a previsously created VPN gateway, in case of create_virtual_private_gw = false."
+  default     = ""
 }
